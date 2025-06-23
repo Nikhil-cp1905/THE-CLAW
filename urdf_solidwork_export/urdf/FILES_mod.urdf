@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="robotic_arm">
+
+  <!-- Base Link (unchanged from your original) -->
+  <link name="base_mount">
+    <inertial>
+      <origin xyz="1.0998 -0.41056 0.55425" rpy="0 0 0" />
+      <mass value="0.45816" />
+      <inertia ixx="0.0013711" ixy="0.00010032" ixz="-5.1045E-05" iyy="0.00083591" iyz="0.0006243" izz="0.0011845" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/base_mount .STL" />
+      </geometry>
+      <material name="blue">
+        <color rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/base_mount .STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 1 - Base Rotation (changed to revolute) -->
+  <joint name="joint1" type="revolute">
+    <origin xyz="1.0983 -0.56488 -0.33744" rpy="-0.9167 0.042506 -3.019" />
+    <parent link="base_mount" />
+    <child link="motor_mount" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="1.0" />
+  </joint>
+
+  <!-- Motor Mount Link (unchanged) -->
+  <link name="motor_mount">
+    <inertial>
+      <origin xyz="-0.000109914347035556 2.55627739711439E-05 0.00443722369134752" rpy="0 0 0" />
+      <mass value="0.0443532648038581" />
+      <inertia ixx="1.54477426810479E-05" ixy="-2.24280180527475E-08" ixz="-3.13818526286825E-08" 
+              iyy="2.34667764715966E-05" iyz="7.29847583302344E-09" izz="3.0126530505063E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/motor_mount .STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/motor_mount .STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 2 - Shoulder (changed to revolute) -->
+  <joint name="joint2" type="revolute">
+    <origin xyz="0 0 0" rpy="-2.74451320836481 1.57079630572147 -0.207496226435203" />
+    <parent link="motor_mount" />
+    <child link="Bearing" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
+  </joint>
+
+  <!-- Bearing Link (unchanged) -->
+  <link name="Bearing">
+    <inertial>
+      <origin xyz="0.0542629736525755 -0.000274501619444201 -8.43278345146192E-05" rpy="0 0 0" />
+      <mass value="0.0892372697085313" />
+      <inertia ixx="0.000228309865629767" ixy="-1.15196480826585E-19" ixz="7.86046575051991E-19" 
+              iyy="0.000115123102048288" iyz="4.06575814682064E-20" izz="0.000115123102048288" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/Bearing.STL" />
+      </geometry>
+      <material name="gray">
+        <color rgba="0.77647 0.75686 0.73725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/Bearing.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 3 - Elbow (changed to revolute) -->
+  <joint name="joint3" type="revolute">
+    <origin xyz="0.0255 0.0097255 -8.4328E-05" rpy="3.1416 1.3272 1.5708" />
+    <parent link="Bearing" />
+    <child link="link1_case" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
+  </joint>
+
+  <!-- Link 1 Case (unchanged) -->
+  <link name="link1_case">
+    <inertial>
+      <origin xyz="0.0862182679991084 0.0272499956921421 -0.0130738686741636" rpy="0 0 0" />
+      <mass value="0.484506613516174" />
+      <inertia ixx="0.00082420637073408" ixy="-2.11455049840435E-11" ixz="0.000360880361588026" 
+              iyy="0.00448684984771087" iyz="3.9759125245592E-11" izz="0.00374696069768801" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link1_case.STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link1_case.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 4 - Wrist (changed to revolute) -->
+  <joint name="joint4" type="revolute">
+    <origin xyz="0.74461 0.013314 -0.031931" rpy="1.5708 -1.4753 1.5708" />
+    <parent link="link1_case" />
+    <child link="motor2_mount" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
+  </joint>
+
+  <!-- Motor 2 Mount (unchanged) -->
+  <link name="motor2_mount">
+    <inertial>
+      <origin xyz="3.9186454708906E-06 -0.0135617668782025 -0.0539815772319162" rpy="0 0 0" />
+      <mass value="0.316662661027314" />
+      <inertia ixx="0.000703148188076945" ixy="8.71601132192064E-08" ixz="5.69663821148347E-09" 
+              iyy="0.000753620040947642" iyz="-1.41438769462502E-07" izz="0.000136308481732593" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/motor2_mount .STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/motor2_mount .STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 5 - Wrist Rotation (changed to revolute) -->
+  <joint name="joint5" type="revolute">
+    <origin xyz="0 0.01 0" rpy="-1.5708 0.56634 0" />
+    <parent link="motor2_mount" />
+    <child link="bearing2" />
+    <axis xyz="1 0 0" />
+    <limit lower="-3.14" upper="3.14" effort="50" velocity="1.0" />
+  </joint>
+
+  <!-- Bearing 2 (unchanged) -->
+  <link name="bearing2">
+    <inertial>
+      <origin xyz="-0.0012501 -0.00060271 -0.013508" rpy="0 0 0" />
+      <mass value="0.043652" />
+      <inertia ixx="2.9185E-05" ixy="-3.1224E-10" ixz="3.2995E-11" 
+              iyy="2.9185E-05" iyz="5.7193E-11" izz="5.8016E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/bearing2.STL" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/bearing2.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Gripper Joint (changed to prismatic) -->
+  <joint name="gripper_joint" type="prismatic">
+    <origin xyz="0 0.01 0.005" rpy="-1.5708 0 -1.2914" />
+    <parent link="bearing2" />
+    <child link="link2_case" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.05" effort="20" velocity="0.5" />
+  </joint>
+
+  <!-- Link 2 Case (unchanged) -->
+  <link name="link2_case">
+    <inertial>
+      <origin xyz="0.12676 0.029 -0.018115" rpy="0 0 0" />
+      <mass value="0.40314" />
+      <inertia ixx="0.00060698" ixy="-8.3618E-11" ixz="0.00012754" 
+              iyy="0.0017935" iyz="3.4759E-05" izz="0.0014376" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link2_case.STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link2_case.STL" />
+      </geometry>
+    </collision>
+  </link>
+  
+
+
+  <!-- Link 3 -->
+  <link name="link3">
+    <inertial>
+      <origin xyz="0.1 0 0" rpy="0 0 0"/>
+      <mass value="0.3"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/motor_arm.STL"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/motor_arm.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 4 - Wrist Roll -->
+  <joint name="joint4" type="revolute">
+    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+    <parent link="link3"/>
+    <child link="link4"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- Link 4 -->
+  <link name="link4">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.2"/>
+      <inertia ixx="0.0005" ixy="0" ixz="0" iyy="0.0005" iyz="0" izz="0.0005"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/grippermotor_case.STL"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/grippermotor_case.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 5 - Wrist Pitch -->
+  <joint name="joint5" type="revolute">
+    <origin xyz="0.1 0 0" rpy="0 0 0"/>
+    <parent link="link4"/>
+    <child link="gripper_link"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- Gripper Link -->
+  <link name="gripper_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/gripper.STL"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/gripper.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Gripper Joint -->
+  <joint name="gripper_joint" type="prismatic">
+    <origin xyz="0.05 0 0" rpy="0 0 0"/>
+    <parent link="gripper_link"/>
+    <child link="gripper_tip"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="0" upper="0.05" effort="5" velocity="0.5"/>
+  </joint>
+
+  <!-- Gripper Tip Link -->
+  <link name="gripper_tip">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+    </inertial>
+  </link>
+
+</robot>
